@@ -1,13 +1,20 @@
 <template>
-  <div class="name">{{name}}</div>
+  <div class="name">{{greet}}</div>
 </template>
 
 <script>
   export default {
     setup(){
       const name = 'Kossie coder';
+
+      const greeting =(name)=>{ //eslint-disable-line no-unused-vars
+        return 'Hello '+name;
+      };
+
+      const greet = greeting(name);
+
       return {
-        name
+        greet
       };
     }
   }
