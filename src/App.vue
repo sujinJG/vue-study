@@ -4,20 +4,15 @@
 </template>
 
 <script>
+  import { ref } from 'vue'; 
   export default {
     setup(){
-      let name = 'Kossie coder1';
+      const name = ref({
+        id : 1
+      });
 
-/** 
-      const greeting =(name)=>{ 
-        return 'Hello '+name;
-      };
-
-      const greet = greeting(name);
-*/
       const updateName=()=>{
-        name = 'Kossie Coder';
-        console.log(name);
+        name.value.id = 2;
       }; 
 
       return {
