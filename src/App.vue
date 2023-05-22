@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <h4>Count {{count}}</h4>
+    <h4>double Count Computed {{doubleCountComputed}}</h4>
+    <h4>double Count Computed {{doubleCountComputed}}</h4>
+    <h4>double Count Method {{doubleCountMethod()}}</h4>
+    <h4>double Count Method {{doubleCountMethod()}}</h4>
+    <button @click="count++"> Add One </button>
+
     <h2>To-Do List</h2>
     
     <!-- 자식 컴포넌트의 이벤트를 부모 컴포넌트에 연결 -->
@@ -16,7 +23,7 @@
 </template>
 
 <script>
-  import { ref } from 'vue'; 
+  import { ref, computed } from 'vue'; 
   import TodoSimpleForm from './components/TodoSimpleForm.vue';
   import TodoList from './components/TodoList.vue';
 
@@ -40,11 +47,25 @@
         todos.value[index].completed = ! todos.value[index].completed
       }
 
+      const count = ref(1);
+      const doubleCountComputed = computed(()=>{
+        console.log('computed');
+        return count.value * 2;
+      })
+
+      const doubleCountMethod=()=>{
+        console.log('method');
+        return count.value *2;
+      }
+
       return {
         addTodo
         , todos
         , deleteTodo
         , toggleTodo
+        , count
+        , doubleCountComputed
+        , doubleCountMethod
       };
     }
   }
