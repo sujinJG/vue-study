@@ -9,24 +9,9 @@
       추가된 Todo가 없습니다.
     </div>
 
-    <div v-for="(todo, index) in todos" :key="todo.id" class="card mt-2">
-      <div class="card-body p-2 d-flex align-items-center">
-        <div class="form-check flex-grow-1">
-          <input 
-            class="form-check-input" 
-            type="checkbox" 
-            v-model="todo.completed">
-          <label
-            :class="{todo: todo.completed}"
-            class="form-check-label" for="todo.subject" >
-            {{todo.subject}}
-          </label>
-        </div>
-        <div>
-          <button @click="deleteTodo(index)" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
+    <!-- 컴포넌트 :[prop명]="접근허용할 변수명" -->
+    <TodoList :todos="todos" />
+    
 
   </div>
 </template>
@@ -34,13 +19,15 @@
 <script>
   import { ref } from 'vue'; 
   import TodoSimpleForm from './components/TodoSimpleForm.vue';
+  import TodoList from './components/TodoList.vue';
 
   export default {
     components : { //가져온 컴포넌트를 등록
       TodoSimpleForm
+      , TodoList
     },
     setup(){
-      const todos = ref([]);
+      const todos = ref([]); //다른 컴포넌트에서도 사용하기 때문에 이동할 수 없음
 
       const addTodo=(todo)=>{ //자식 컴포넌트가 emit하여 보내온 값을 받음
         todos.value.push(todo);
