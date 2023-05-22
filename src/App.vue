@@ -10,7 +10,7 @@
     </div>
 
     <!-- 컴포넌트 :[prop명]="접근허용할 변수명" -->
-    <TodoList :todos="todos" @toggle-todo="toggleTodo"/>
+    <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo"/>
 
   </div>
 </template>
@@ -37,9 +37,7 @@
       }
 
       const toggleTodo=(index)=>{
-        console.log(index+ ', '+ todos.value[index].completed);
         todos.value[index].completed = ! todos.value[index].completed
-        console.log('==> '+ todos.value[index].completed);
       }
 
       return {
