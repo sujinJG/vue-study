@@ -29,7 +29,9 @@
             class="form-check-input" 
             type="checkbox" 
             v-model="todo.completed">
-          <label class="form-check-label" for="todo.subject" >
+          <label
+            :class="{todo: todo.completed}"
+            class="form-check-label" for="todo.subject" >
             {{todo.subject}}
           </label>
         </div>
@@ -44,7 +46,6 @@
     setup(){
       const todo = ref('');
       const todos = ref([]);
-
       const hasError = ref(false);
 
       const onSubmit=()=>{
@@ -61,7 +62,6 @@
         }
       }; 
 
-
       return {
         todo
         , onSubmit
@@ -73,7 +73,8 @@
 </script>
 
 <style>
-  .name {
-    color :red
+  .todo {
+    color : gray;
+    text-decoration: line-through;
   }
 </style>
