@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <h2>To-Do List</h2>
-    <TodoSimpleForm />
+    
+    <!-- 자식 컴포넌트의 이벤트를 부모 컴포넌트에 연결 -->
+    <TodoSimpleForm @add-todo="addTodo" />
     
     <div v-if="!todos.length">
       추가된 Todo가 없습니다.
@@ -38,33 +40,19 @@
       TodoSimpleForm
     },
     setup(){
-      const todo = ref('');
       const todos = ref([]);
-      const hasError = ref(false);
 
-      const onSubmit=()=>{
-        if(todo.value === ''){
-          hasError.value = true;
-        }else{
-          hasError.value = false;
-          todos.value.push({
-            id : Date.now(),
-            subject:  todo.value,
-            completed : false
-          });
-          todo.value = "";
-        }
-      }; 
+      const addTodo=(todo)=>{ //자식 컴포넌트가 emit하여 보내온 값을 받음
+        todos.value.push(todo);
+      }
 
       const deleteTodo =(index)=>{
         todos.value.splice(index, 1);
       }
 
       return {
-        todo
-        , onSubmit
+        addTodo
         , todos
-        , hasError
         , deleteTodo
       };
     }
