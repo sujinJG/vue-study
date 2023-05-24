@@ -39,18 +39,29 @@
       const todos = ref([]);
       const err = ref('');
 
-      const addTodo=(todo)=>{
+      const addTodo= async (todo)=>{
         //데이터베이스 todo를 저장
         err.value = '';
-        axios.post('http://localhost:3000/todos',{
-          subject: todo.subject,
-          completed: todo.completed
-        }).then(res=>{
+
+        try {
+          const res = await axios.post('http://localhost:3000/todos',{
+            subject: todo.subject,
+            completed: todo.completed
+          })
+          
           todos.value.push(res.data);
-        }).catch(err=>{ //예외처리
+        } catch (error) {
           console.log(err);
           err.value = 'Something went wrong';
-        })
+        }
+
+        
+        // .then(res=>{
+        //   todos.value.push(res.data);
+        // }).catch(err=>{ //예외처리
+        //   console.log(err);
+        //   err.value = 'Something went wrong';
+        // })
       }
 
       const deleteTodo =(index)=>{
