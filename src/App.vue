@@ -47,15 +47,12 @@
           console.log(error);
           err.value = 'Fail to load';
         }
-
       }
 
       getTodo();
 
       const addTodo= async (todo)=>{
-        //데이터베이스 todo를 저장
         err.value = '';
-
         try {
           const res = await axios.post('http://localhost:3000/todos',{
             subject: todo.subject,
@@ -69,8 +66,17 @@
         }
       }
 
-      const deleteTodo =(index)=>{
-        todos.value.splice(index, 1);
+      const deleteTodo=async(index)=>{
+        err.value='';
+
+        const id = todos.value[index].id;
+        try{
+          await axios.delete('http://localhost:3000/todos/'+id);
+          todos.value.splice(index, 1);
+        }catch(err){
+          console.log(err);
+          err.value = 'Something went wrong';
+        }
       }
 
       const toggleTodo=(index)=>{

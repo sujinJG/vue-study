@@ -6,59 +6,9 @@
       "id": 1
     },
     {
-      "subject": "qwer",
-      "completed": false,
-      "id": 2
-    },
-    {
-      "subject": "123",
-      "completed": false,
-      "id": 3
-    },
-    {
-      "subject": "12345",
-      "completed": false,
-      "id": 4
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "id": 5
-    },
-    {
-      "subject": "667893",
-      "completed": false,
-      "id": 6
-    },
-    {
-      "subject": "12345",
-      "completed": false,
-      "id": 7
-    },
-    {
-      "subject": "123456",
-      "completed": false,
-      "id": 8
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "id": 9
-    },
-    {
-      "subject": "addTodo",
-      "completed": false,
-      "id": 10
-    },
-    {
       "subject": "todo",
       "completed": false,
       "id": 11
-    },
-    {
-      "subject": "hello",
-      "completed": false,
-      "id": 12
     }
   ]
 }
