@@ -39,6 +39,19 @@
       const todos = ref([]);
       const err = ref('');
 
+      const getTodo =async()=>{
+        try {
+          const res = await axios.get('http://localhost:3000/todos');
+          todos.value = res.data
+        } catch (error) {
+          console.log(error);
+          err.value = 'Fail to load';
+        }
+
+      }
+
+      getTodo();
+
       const addTodo= async (todo)=>{
         //데이터베이스 todo를 저장
         err.value = '';
@@ -54,14 +67,6 @@
           console.log(err);
           err.value = 'Something went wrong';
         }
-
-        
-        // .then(res=>{
-        //   todos.value.push(res.data);
-        // }).catch(err=>{ //예외처리
-        //   console.log(err);
-        //   err.value = 'Something went wrong';
-        // })
       }
 
       const deleteTodo =(index)=>{
@@ -91,6 +96,7 @@
         , searchText
         , filteredTodos
         , err
+        , getTodo
       };
     }
   }
