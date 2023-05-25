@@ -63,7 +63,7 @@
         currentPage.value = page;
         try {
           const res = await axios.get(
-            `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
+            `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}&_sort=id&_order=desc`
           );
 
           numberOfTodos.value = res.headers['x-total-count'];
@@ -98,7 +98,6 @@
             completed: todo.completed,
           });
 
-          // todos.value.push(res.data);
           getTodos();
         } catch (error) {
           console.log(err);
@@ -111,9 +110,7 @@
         const id = todos.value[index].id;
         try {
           await axios.delete("http://localhost:3000/todos/" + id);
-          todos.value.splice(index, 1);
-
-          getTodos();
+          getTodos(1);
         } catch (err) {
           console.log(err);
           err.value = "Something went wrong";
