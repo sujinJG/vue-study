@@ -22,30 +22,30 @@
 </template>
 
 <script>
-export default {
-    // props: ['todos'] //부모 컴포넌트에서 보낸 변수에 접근할 수 있도록 선언
-    props : { //부모 컴포넌트에서 보낸 변수를 오브젝트로 선언하여 타입과 필수여부 설정
-        todos: {
-            type: Array,
-            required: true
+  export default {
+      // props: ['todos'] //부모 컴포넌트에서 보낸 변수에 접근할 수 있도록 선언
+      props : { //부모 컴포넌트에서 보낸 변수를 오브젝트로 선언하여 타입과 필수여부 설정
+          todos: {
+              type: Array,
+              required: true
+          }
+      },
+      emits: ['toggle-todo', 'delete-todo'],
+      // setup(props, context){
+      setup(props, {emit}){
+        const toggleTodo =(index)=>{
+          // context.emit('toggle-todo', index);
+          emit('toggle-todo', index);
         }
-    },
-    emits: ['toggle-todo', 'delete-todo'],
-    // setup(props, context){
-    setup(props, {emit}){
-      const toggleTodo =(index)=>{
-        // context.emit('toggle-todo', index);
-        emit('toggle-todo', index);
+        const deleteTodo =(index)=>{
+          // context.emit('delete-todo', index);
+          emit('delete-todo', index);
+        }
+        return {
+          toggleTodo, deleteTodo
+        }
       }
-      const deleteTodo =(index)=>{
-        // context.emit('delete-todo', index);
-        emit('delete-todo', index);
-      }
-      return {
-        toggleTodo, deleteTodo
-      }
-    }
-}
+  }
 </script>
 
 <style>

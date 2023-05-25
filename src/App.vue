@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import { ref, computed } from "vue";
+  import { ref, computed, watchEffect } from "vue";
   import TodoSimpleForm from "./components/TodoSimpleForm.vue";
   import TodoList from "./components/TodoList.vue";
   import axios from "axios";
@@ -51,12 +51,27 @@
       const todos = ref([]);
       const err = ref("");
       const numberOfTodos = ref(0);
-      const limit = 5;
+      let limit = 5;
       const currentPage = ref(1);
+
+      watchEffect(()=>{ 
+        // 함수 안에 reactive/ref/computed 변수(s)가 있으면 변수의 값이 변경될 때마다 실행됨
+        // console.log(currentPage.value);
+        // console.log(numberOfTodos.value);
+
+        //const는 적용 안됨
+        console.log(limit);
+      });
+
+      limit = 3;
 
       const numberOfPages = computed(()=>{
         return Math.ceil(numberOfTodos.value/limit);
       })
+
+      // watchEffect(()=>{
+      //   console.log(numberOfPages.value);
+      // });
 
       const getTodos = async (page = currentPage.value) => {
         currentPage.value = page;
@@ -78,12 +93,14 @@
       const addTodo = async (todo) => {
         err.value = "";
         try {
-          const res = await axios.post("http://localhost:3000/todos", {
+          // const res = await axios.post("http://localhost:3000/todos", {
+          await axios.post("http://localhost:3000/todos", {
             subject: todo.subject,
             completed: todo.completed,
           });
 
-          todos.value.push(res.data);
+          // todos.value.push(res.data);
+          getTodos();
         } catch (error) {
           console.log(err);
           err.value = "Something went wrong";
