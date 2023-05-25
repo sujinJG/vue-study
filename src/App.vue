@@ -12,10 +12,10 @@
     <TodoSimpleForm @add-todo="addTodo" />
     <div style="color: red">{{ err }}</div>
 
-    <div v-if="!todos.length">There is nothings to display</div>
+    <div class="mt-1" v-if="!todos.length">There is nothings to display</div>
 
     <TodoList
-      :todos="filteredTodos"
+      :todos="todos"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -53,10 +53,7 @@
       const numberOfTodos = ref(0);
       const limit = 5;
       const currentPage = ref(1);
-
-      watch([currentPage, numberOfTodos], (currentPage, prev)=>{
-        console.log(currentPage, prev);
-      });
+      const searchText = ref("");
 
       const numberOfPages = computed(()=>{
         return Math.ceil(numberOfTodos.value/limit);
@@ -66,9 +63,9 @@
         currentPage.value = page;
         try {
           const res = await axios.get(
-            `http://localhost:3000/todos?_page=${page}&_limit=${limit}`
+            `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
           );
-          
+
           numberOfTodos.value = res.headers['x-total-count'];
           todos.value = res.data;
         } catch (error) {
@@ -78,6 +75,19 @@
       };
 
       getTodos();
+
+      watch(searchText, ()=>{
+        getTodos(1);
+      });
+
+      // const filteredTodos = computed(() => {
+      //   if (searchText.value) {
+      //     return todos.value.filter((todo) => {
+      //       return todo.subject.includes(searchText.value);
+      //     });
+      //   }
+      //   return todos.value;
+      // });
 
       const addTodo = async (todo) => {
         err.value = "";
@@ -124,24 +134,13 @@
         }
       };
 
-      const searchText = ref("");
-      const filteredTodos = computed(() => {
-        if (searchText.value) {
-          return todos.value.filter((todo) => {
-            return todo.subject.includes(searchText.value);
-          });
-        }
-
-        return todos.value;
-      });
-
       return {
         addTodo,
         todos,
         deleteTodo,
         toggleTodo,
         searchText,
-        filteredTodos,
+        // filteredTodos,
         err,
         getTodos,
         numberOfPages,
