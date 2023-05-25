@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import { ref, computed, watchEffect } from "vue";
+  import { ref, computed, watch } from "vue";
   import TodoSimpleForm from "./components/TodoSimpleForm.vue";
   import TodoList from "./components/TodoList.vue";
   import axios from "axios";
@@ -51,27 +51,16 @@
       const todos = ref([]);
       const err = ref("");
       const numberOfTodos = ref(0);
-      let limit = 5;
+      const limit = 5;
       const currentPage = ref(1);
 
-      watchEffect(()=>{ 
-        // 함수 안에 reactive/ref/computed 변수(s)가 있으면 변수의 값이 변경될 때마다 실행됨
-        // console.log(currentPage.value);
-        // console.log(numberOfTodos.value);
-
-        //const는 적용 안됨
-        console.log(limit);
+      watch([currentPage, numberOfTodos], (currentPage, prev)=>{
+        console.log(currentPage, prev);
       });
-
-      limit = 3;
 
       const numberOfPages = computed(()=>{
         return Math.ceil(numberOfTodos.value/limit);
       })
-
-      // watchEffect(()=>{
-      //   console.log(numberOfPages.value);
-      // });
 
       const getTodos = async (page = currentPage.value) => {
         currentPage.value = page;
@@ -113,6 +102,8 @@
         try {
           await axios.delete("http://localhost:3000/todos/" + id);
           todos.value.splice(index, 1);
+
+          getTodos();
         } catch (err) {
           console.log(err);
           err.value = "Something went wrong";
