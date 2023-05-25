@@ -7,6 +7,7 @@
       type="text"
       v-model="searchText"
       placeholder="Search"
+      @keyup.enter="searchTodo"
     />
     <hr />
     <TodoSimpleForm @add-todo="addTodo" />
@@ -76,9 +77,18 @@
 
       getTodos();
 
+      let timeout = null
       watch(searchText, ()=>{
-        getTodos(1);
+        clearTimeout(timeout); //timeout 초기화
+        timeout = setTimeout(()=>{
+          getTodos(1);
+        }, 1200);
       });
+
+      const searchTodo=()=>{
+        clearTimeout(timeout); //timeout 초기화
+        getTodos(1);
+      }
 
       // const filteredTodos = computed(() => {
       //   if (searchText.value) {
@@ -141,7 +151,8 @@
         err,
         getTodos,
         numberOfPages,
-        currentPage
+        currentPage,
+        searchTodo
       };
     },
   };
