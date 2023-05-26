@@ -36,19 +36,9 @@
       "id": 20
     },
     {
-      "subject": "todo11",
-      "completed": false,
+      "subject": "todo999",
+      "completed": true,
       "id": 21
-    },
-    {
-      "subject": "todo235",
-      "completed": false,
-      "id": 22
-    },
-    {
-      "subject": "todo9999",
-      "completed": false,
-      "id": 23
     }
   ]
 }
