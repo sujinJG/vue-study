@@ -29,18 +29,18 @@
                 </div>
             </div>
         </div>
-
-        <button 
-            type="submit" 
-            class="btn btn-primary">
-            저장
-        </button>
-        <button 
-            class="btn btn-outline-dark ml-2"
-            @click="moveToTodoListPage">
-            취소
-        </button>
     </div>
+    <button 
+        :disabled="!todoUpdated"
+        type="submit" 
+        class="btn btn-primary">
+        저장
+    </button>
+    <button 
+        class="btn btn-outline-dark ml-2"
+        @click="moveToTodoListPage">
+        취소
+    </button>
   </form>
 </template>
 
@@ -48,21 +48,29 @@
 import axios from 'axios';
 import {useRoute, useRouter} from 'vue-router';
 import {ref} from '@vue/reactivity';
+import { computed } from 'vue';
+import _ from 'lodash';
 
 export default {
     setup(){
         const route = useRoute();
         const router = useRouter();
         const todo = ref(null);
+        const originalTodo = ref(null);
         const loading = ref(true);
         const todoId  = route.params.id;
 
         const getTodo=async()=>{
             const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
-            todo.value = res.data;
+            todo.value = {...res.data}; // {...[data]}로 독립된 객체로 값만 복사
+            originalTodo.value = {...res.data};
 
             loading.value = false;
         }
+
+        const todoUpdated = computed(()=>{
+            return !_.isEqual(todo.value, originalTodo.value);
+        })
 
         getTodo();
 
@@ -82,7 +90,7 @@ export default {
                 completed: todo.value.completed
             });
 
-            console.log(res);
+            originalTodo.value = {...res.data};
         }
 
         return {
@@ -91,6 +99,7 @@ export default {
             , toggleTodoStatus
             , moveToTodoListPage
             , onSave
+            , todoUpdated
         }
         
         
