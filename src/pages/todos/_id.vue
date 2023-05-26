@@ -1,7 +1,9 @@
 <template>
   <h1>To-Do Page</h1>
   <div v-if="loading"> Loading... </div>
-  <form v-else>
+  <form 
+    v-else
+    @submit.prevent="onSave">
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -28,7 +30,11 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">저장</button>
+        <button 
+            type="submit" 
+            class="btn btn-primary">
+            저장
+        </button>
         <button 
             class="btn btn-outline-dark ml-2"
             @click="moveToTodoListPage">
@@ -49,9 +55,10 @@ export default {
         const router = useRouter();
         const todo = ref(null);
         const loading = ref(true);
+        const todoId  = route.params.id;
 
         const getTodo=async()=>{
-            const res = await axios.get('http://localhost:3000/todos/'+route.params.id);
+            const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
             todo.value = res.data;
 
             loading.value = false;
@@ -69,11 +76,21 @@ export default {
             })
         }
 
+        const onSave=async()=>{
+            const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
+                subject: todo.value.subject,
+                completed: todo.value.completed
+            });
+
+            console.log(res);
+        }
+
         return {
             todo
             , loading
             , toggleTodoStatus
             , moveToTodoListPage
+            , onSave
         }
         
         

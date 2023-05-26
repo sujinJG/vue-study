@@ -32,7 +32,7 @@
     },
     {
       "subject": "todo10",
-      "completed": false,
+      "completed": true,
       "id": 20
     },
     {
