@@ -17,7 +17,7 @@ const router = createRouter({
             component: Todos
         },
         {
-            path: '/todos/:id', // " :[변수명] "
+            path: '/todos/:id', // " :[변수명] " // 이렇게 정의한 route의 연결 파일은 _(언더바)를 붙여 생성
             name: 'Todo',
             component: Todo
         }
