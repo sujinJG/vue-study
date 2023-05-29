@@ -40,7 +40,7 @@
 import axios from "axios";
 import { useRoute, useRouter} from "vue-router";
 import { ref } from "@vue/reactivity";
-import { computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from "vue";
+import { computed, onUnmounted } from "vue";
 import _ from "lodash";
 import Toast from "@/components/Toast.vue";
 
@@ -50,30 +50,6 @@ export default {
   },
 
   setup() {
-    onBeforeMount(()=>{ //컴포넌트가 마운트되기 전에 호출
-        console.log(document.querySelector('#kossie'));
-    })
-
-    onMounted(()=>{ //컴포넌트가 마운트된 후 호출
-        console.log(document.querySelector('#kossie'));
-    })
-
-    onBeforeUpdate(()=>{ //DOM 트리 업데이트 전 호출
-        console.log("onBeforeUpdate");
-    })
-
-    onUpdated(()=>{ //DOM 트리 업데이트 후 호출
-        console.log("onUpdated");
-    })
-
-    onBeforeUnmount(()=>{ //컴포넌트가 메모리에서 빠지기 전 호출
-        console.log("onBeforeUnmount");
-    })
-
-    onUnmounted(()=>{ //컴포넌트가 메모리에서 빠진 후 호출
-        console.log("onUnmounted");
-    })
-
     const route = useRoute();
     const router = useRouter();
     const todo = ref(null);
@@ -83,6 +59,12 @@ export default {
     const showToast = ref(false);
     const toastMessage = ref('');
     const toastAlertType = ref('');
+    const timeout = ref(null);
+
+    onUnmounted(()=>{ 
+        console.log("onBeforeUnmount");
+        clearTimeout(timeout.value);
+    })
 
     const getTodo = async () => {
         try {
@@ -117,9 +99,10 @@ export default {
       toastMessage.value=message;
       toastAlertType.value = type;
 
-      setTimeout(()=>{
+      timeout.value = setTimeout(()=>{ //메모리에 적재되어 페이지 이동 후(컴포넌트 벗어난 후)에도 실행됨
         toastMessage.value = "";
         showToast.value = false;
+        console.log('setTimeoutEnd');
       }, 3000);
     };
 
