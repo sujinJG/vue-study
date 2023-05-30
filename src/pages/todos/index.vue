@@ -14,7 +14,6 @@
       @keyup.enter="searchTodo"
     />
     <hr />
-    <TodoSimpleForm @add-todo="addTodo" />
     <div style="color: red">{{ err }}</div>
 
     <div class="mt-1" v-if="!todos.length">There is nothings to display</div>
@@ -47,7 +46,6 @@
 
 <script>
   import { ref, computed, watch } from "vue";
-  import TodoSimpleForm from "@/components/TodoSimpleForm.vue";
   import TodoList from "@/components/TodoList.vue"; //@ : 프로젝트 src 폴더 경로를 뜻함
   import axios from "axios";
   import Toast from "@/components/Toast.vue";
@@ -56,7 +54,6 @@
 
   export default {
     components: {
-      TodoSimpleForm,
       TodoList,
       Toast,
     },
