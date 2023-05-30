@@ -24,13 +24,18 @@
       </div>
     </div>
     <teleport to="#modal">
-      <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
+      <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo">
+        <!-- slot 부분 -->
+        <template v-slot:title>Delete Todo!!</template> 
+        <template v-slot:body>Are you sure?</template> 
+        <template v-slot:footer>delete</template> 
+      </Modal>
     </teleport>
 </template>
 
 <script>
   import {useRouter} from 'vue-router';
-  import Modal from '@/components/Modal.vue'
+  import Modal from '@/components/DeleteModal.vue'
   import {ref} from 'vue';
 
   export default {

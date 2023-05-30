@@ -1,7 +1,6 @@
 <template>
   <router-view />
 
-  <div style="opacity: 0.5">
     <div class="container">
       <div class="d-flex justify-content-between mb-3">
         <h2>To-Do List</h2>
@@ -44,8 +43,6 @@
         v-if="showToast"
         :message="toastMessage"
         :type="toastAlertType"/>
-  
-  </div>
 </template>
 
 <script>
