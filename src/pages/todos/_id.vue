@@ -68,7 +68,7 @@ export default {
     const getTodo = async () => {
         try {
             const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
-            todo.value = { ...res.data }; // {...[data]}로 독립된 객체로 값만 복사
+            todo.value = { ...res.data }; 
             originalTodo.value = { ...res.data };
       
             loading.value = false;

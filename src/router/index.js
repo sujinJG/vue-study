@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
 import Todo from '../pages/todos/_id.vue';
+import TodoCreate from '../pages/todos/create/index.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -17,13 +18,16 @@ const router = createRouter({
             component: Todos
         },
         {
-            path: '/todos/:id', // " :[변수명] " // 이렇게 정의한 route의 연결 파일은 _(언더바)를 붙여 생성
+            path: '/todos/create',
+            name: 'TodoCreate',
+            component: TodoCreate
+        },
+        {
+            path: '/todos/:id', //파라미터를 받는 라우터를 뒤에 놓아야 함
             name: 'Todo',
             component: Todo
-        }
+        },
     ]
 });
-
-// 1 / home 2 /todos 3 /todos/create 4 /todos/:id
 
 export default router;
