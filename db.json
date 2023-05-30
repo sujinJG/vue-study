@@ -21,27 +21,10 @@
       "id": 17
     },
     {
-      "subject": "todo5",
-      "completed": false,
-      "id": 18
-    },
-    {
       "subject": "todo999",
       "completed": true,
       "body": "123",
       "id": 21
-    },
-    {
-      "subject": "todo123",
-      "completed": false,
-      "body": "todo",
-      "id": 26
-    },
-    {
-      "subject": "todo1234",
-      "completed": false,
-      "body": "todo12345",
-      "id": 27
     }
   ]
 }

@@ -1,47 +1,51 @@
 <template>
   <router-view />
-  <div class="container">
-    <div class="d-flex justify-content-between mb-3">
-      <h2>To-Do List</h2>
-      <button class="btn btn-primary" @click="moveToCreatePage"> create Todo </button>
+
+  <div style="opacity: 0.5">
+    <div class="container">
+      <div class="d-flex justify-content-between mb-3">
+        <h2>To-Do List</h2>
+        <button class="btn btn-primary" @click="moveToCreatePage"> create Todo </button>
+      </div>
+  
+      <input
+        class="form-control"
+        type="text"
+        v-model="searchText"
+        placeholder="Search"
+        @keyup.enter="searchTodo"
+      />
+      <hr />
+      <div style="color: red">{{ err }}</div>
+  
+      <div class="mt-1" v-if="!todos.length">There is nothings to display</div>
+  
+      <TodoList
+        :todos="todos"
+        @toggle-todo="toggleTodo"
+        @delete-todo="deleteTodo"
+      />
+      <hr />
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" v-if="currentPage !== 1">
+              <a class="page-link cursor-p" @click="getTodos(currentPage-1)"> Previous </a>
+          </li>
+          <li v-for="page in numberOfPages" :key="page" class="page-item" :class="currentPage === page ? ' active' : ''">
+            <a class="page-link" href="#" @click="getTodos(page)">{{page}}</a>
+          </li>
+          <li class="page-item" v-if="numberOfPages !== currentPage">
+            <a class="page-link cursor-p" @click="getTodos(currentPage+1)">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-    <input
-      class="form-control"
-      type="text"
-      v-model="searchText"
-      placeholder="Search"
-      @keyup.enter="searchTodo"
-    />
-    <hr />
-    <div style="color: red">{{ err }}</div>
-
-    <div class="mt-1" v-if="!todos.length">There is nothings to display</div>
-
-    <TodoList
-      :todos="todos"
-      @toggle-todo="toggleTodo"
-      @delete-todo="deleteTodo"
-    />
-    <hr />
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item" v-if="currentPage !== 1">
-            <a class="page-link cursor-p" @click="getTodos(currentPage-1)"> Previous </a>
-        </li>
-        <li v-for="page in numberOfPages" :key="page" class="page-item" :class="currentPage === page ? ' active' : ''">
-          <a class="page-link" href="#" @click="getTodos(page)">{{page}}</a>
-        </li>
-        <li class="page-item" v-if="numberOfPages !== currentPage">
-          <a class="page-link cursor-p" @click="getTodos(currentPage+1)">Next</a>
-        </li>
-      </ul>
-    </nav>
+    <Toast 
+        v-if="showToast"
+        :message="toastMessage"
+        :type="toastAlertType"/>
+  
   </div>
-  <Toast 
-      v-if="showToast"
-      :message="toastMessage"
-      :type="toastAlertType"/>
 </template>
 
 <script>
