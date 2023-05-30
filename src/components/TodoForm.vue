@@ -30,8 +30,8 @@
                 </div>
             </div>
         </div>
-        <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">저장</button>
-        <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">취소</button>
+        <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">{{editing ? 'Update' : 'Create'}}</button>
+        <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">Cancle</button>
     </form>
     <Toast 
         v-if="showToast"
@@ -110,14 +110,25 @@ export default {
     };
 
     const onSave = async () => {
+        let res;
+        const data = {
+                  subject: todo.value.subject,
+                  completed: todo.value.completed,
+                  body : todo.value.body
+                }
         try {
-            const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
-              subject: todo.value.subject,
-              completed: todo.value.completed,
-            });
+            if(props.editing){
+                res = await axios.put(`http://localhost:3000/todos/${todoId}`, data);
+            }else{
+                res = await axios.post(`http://localhost:3000/todos`, data);
+                
+                todo.value.subject = '';
+                todo.value.body = '';
+            }
 
             originalTodo.value = { ...res.data };
-            triggerToast('Successfully saved!');
+            const message = 'Succefully '+ (props.editing ? 'Updated' : 'Create');
+            triggerToast(message);
         } catch (error) {
             triggerToast('Something went wrong', 'danger');
         }
