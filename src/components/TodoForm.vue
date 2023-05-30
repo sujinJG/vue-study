@@ -34,10 +34,12 @@
         <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">{{editing ? 'Update' : 'Create'}}</button>
         <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">Cancle</button>
     </form>
-    <Toast 
-        v-if="showToast"
-        :message="toastMessage"
-        :type="toastAlertType"/>
+    <transition name="fade">
+        <Toast 
+            v-if="showToast"
+            :message="toastMessage"
+            :type="toastAlertType"/>
+    </transition>
 </template>
 
 <script>
@@ -162,6 +164,20 @@ export default {
 <style scoped>
     .text-red{
         color:red;
+    }
+
+    .fade-enter-active, .fade-leave-active{
+        transition: all 0.5s ease;
+    }
+
+    .fade-enter-from, .fade-leave-to{
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    .fade-enter-to, .fade-leave-from{
+        opacity: 1;
+        transform: translateY(0px);
     }
 </style>
 
