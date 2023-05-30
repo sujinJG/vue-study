@@ -40,9 +40,10 @@
 import axios from "axios";
 import { useRoute, useRouter} from "vue-router";
 import { ref } from "@vue/reactivity";
-import { computed, onUnmounted } from "vue";
+import { computed } from "vue";
 import _ from "lodash";
 import Toast from "@/components/Toast.vue";
+import {useToast} from "@/composables/toast";
 
 export default {
   components: {
@@ -56,15 +57,13 @@ export default {
     const originalTodo = ref(null);
     const loading = ref(true);
     const todoId = route.params.id;
-    const showToast = ref(false);
-    const toastMessage = ref('');
-    const toastAlertType = ref('');
-    const timeout = ref(null);
 
-    onUnmounted(()=>{ 
-        console.log("onBeforeUnmount");
-        clearTimeout(timeout.value);
-    })
+    const {
+          toastMessage,
+          toastAlertType,
+          showToast,
+          triggerToast,
+    } = useToast();
 
     const getTodo = async () => {
         try {
@@ -92,18 +91,6 @@ export default {
       router.push({
         name: "Todos",
       });
-    };
-
-    const triggerToast = (message, type) => {
-      showToast.value = true;
-      toastMessage.value=message;
-      toastAlertType.value = type;
-
-      timeout.value = setTimeout(()=>{ //메모리에 적재되어 페이지 이동 후(컴포넌트 벗어난 후)에도 실행됨
-        toastMessage.value = "";
-        showToast.value = false;
-        console.log('setTimeoutEnd');
-      }, 3000);
     };
 
     const onSave = async () => {

@@ -36,6 +36,10 @@
       </ul>
     </nav>
   </div>
+  <Toast 
+      v-if="showToast"
+      :message="toastMessage"
+      :type="toastAlertType"/>
 </template>
 
 <script>
@@ -43,11 +47,14 @@
   import TodoSimpleForm from "@/components/TodoSimpleForm.vue";
   import TodoList from "@/components/TodoList.vue"; //@ : 프로젝트 src 폴더 경로를 뜻함
   import axios from "axios";
+  import Toast from "@/components/Toast.vue";
+  import {useToast} from "@/composables/toast";
 
   export default {
     components: {
       TodoSimpleForm,
       TodoList,
+      Toast,
     },
     setup() {
       const todos = ref([]);
@@ -56,6 +63,13 @@
       const limit = 5;
       const currentPage = ref(1);
       const searchText = ref("");
+
+      const {
+          toastMessage,
+          toastAlertType,
+          showToast,
+          triggerToast,
+        } = useToast();
 
       const numberOfPages = computed(()=>{
         return Math.ceil(numberOfTodos.value/limit);
@@ -71,7 +85,7 @@
           numberOfTodos.value = res.headers['x-total-count'];
           todos.value = res.data;
         } catch (error) {
-          console.log(error);
+          triggerToast('Something went wrong', 'danger');
           err.value = "Fail to load";
         }
       };
@@ -91,15 +105,6 @@
         getTodos(1);
       }
 
-      // const filteredTodos = computed(() => {
-      //   if (searchText.value) {
-      //     return todos.value.filter((todo) => {
-      //       return todo.subject.includes(searchText.value);
-      //     });
-      //   }
-      //   return todos.value;
-      // });
-
       const addTodo = async (todo) => {
         err.value = "";
         try {
@@ -111,7 +116,7 @@
 
           getTodos();
         } catch (error) {
-          console.log(err);
+          triggerToast('Something went wrong', 'danger');
           err.value = "Something went wrong";
         }
       };
@@ -123,7 +128,7 @@
           await axios.delete("http://localhost:3000/todos/" + id);
           getTodos(1);
         } catch (err) {
-          console.log(err);
+          triggerToast('Something went wrong', 'danger');
           err.value = "Something went wrong";
         }
       };
@@ -137,7 +142,7 @@
           });
           todos.value[index].completed = checked;
         } catch (err) {
-          console.log(err);
+          triggerToast('Something went wrong', 'danger');
           err.value = "Something went wrong";
         }
       };
@@ -153,7 +158,11 @@
         getTodos,
         numberOfPages,
         currentPage,
-        searchTodo
+        searchTodo,
+
+        toastMessage,
+        toastAlertType,
+        showToast
       };
     },
   };
