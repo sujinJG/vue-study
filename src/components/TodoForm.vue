@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label> Todo Subject</label>
                     <input v-model="todo.subject" type="text" class="form-control" />
-                    <div v-if="subjectErr" style="color:red">{{subjectErr}}</div>
+                    <div v-if="subjectErr" class="text-red">{{subjectErr}}</div>
                 </div>
             </div>
             <div v-if="editing" class="col-6">
@@ -159,6 +159,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+    .text-red{
+        color:red;
+    }
+</style>
 
+<style>
+    .text-red-all{
+        color:darkred;
+    }
 </style>
