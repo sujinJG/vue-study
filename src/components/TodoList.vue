@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <Modal v-if="showModal" @close="closeModal" />
+    <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
 </template>
 
 <script>
@@ -52,9 +52,12 @@
           // context.emit('toggle-todo', index);
           emit('toggle-todo', index, event.target.checked);
         }
-        const deleteTodo =(index)=>{
+        const deleteTodo=()=>{
           // context.emit('delete-todo', index);
-          emit('delete-todo', index);
+          emit('delete-todo', todoDeleteId.value);
+
+          showModal.value = false;
+          todoDeleteId.value = null;
         }
         const moveToPage=(todoId)=>{
           // router.push('/todos/'+todoId);

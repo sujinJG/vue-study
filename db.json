@@ -26,44 +26,10 @@
       "id": 18
     },
     {
-      "subject": "todo6",
-      "completed": false,
-      "id": 19
-    },
-    {
-      "subject": "todo101",
-      "completed": true,
-      "id": 20
-    },
-    {
       "subject": "todo999",
       "completed": true,
       "body": "123",
       "id": 21
-    },
-    {
-      "subject": "createTodo",
-      "completed": false,
-      "body": "test12343",
-      "id": 22
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "body": "1234",
-      "id": 23
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "body": "512313",
-      "id": 24
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "body": "1234",
-      "id": 25
     },
     {
       "subject": "todo123",
@@ -76,12 +42,6 @@
       "completed": false,
       "body": "todo12345",
       "id": 27
-    },
-    {
-      "subject": "todo12345",
-      "completed": false,
-      "body": ".123123",
-      "id": 28
     }
   ]
 }
