@@ -19,17 +19,23 @@
           </span>
         </div>
         <div>
-          <button @click.stop="deleteTodo(index)" class="btn btn-danger">Delete</button>
+          <button @click.stop="openModal(todo.id)" class="btn btn-danger">Delete</button>
         </div>
       </div>
     </div>
+    <Modal v-if="showModal" @close="closeModal" />
 </template>
 
 <script>
   import {useRouter} from 'vue-router';
+  import Modal from '@/components/Modal.vue'
+  import {ref} from 'vue';
 
   export default {
-      // props: ['todos'] //부모 컴포넌트에서 보낸 변수에 접근할 수 있도록 선언
+      components:{
+        Modal
+      },
+    // props: ['todos'] //부모 컴포넌트에서 보낸 변수에 접근할 수 있도록 선언
       props : { //부모 컴포넌트에서 보낸 변수를 오브젝트로 선언하여 타입과 필수여부 설정
           todos: {
               type: Array,
@@ -40,6 +46,8 @@
       // setup(props, context){
       setup(props, {emit}){
         const router = useRouter();
+        const showModal = ref(false);
+        const todoDeleteId = ref(null);
         const toggleTodo =(index, event)=>{
           // context.emit('toggle-todo', index);
           emit('toggle-todo', index, event.target.checked);
@@ -59,8 +67,22 @@
             }
           })
         }
+
+        const openModal=(id)=>{
+          console.log(showModal.value)
+          todoDeleteId.value = id;
+          showModal.value = true;
+          console.log(showModal.value)
+        }
+
+        const closeModal=()=>{
+          todoDeleteId.value = null;
+          showModal.value = false;
+        }
+
         return {
           toggleTodo, deleteTodo, moveToPage
+          , showModal , openModal, closeModal
         }
       }
   }
