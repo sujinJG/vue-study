@@ -138,7 +138,7 @@ export default {
             if(props.editing){
                 res = await axios.put(`todos/${todoId}`, data);
             }else{
-                res = await axios.post('todos/todos', data);
+                res = await axios.post('todos', data);
                 
                 todo.value.subject = '';
                 todo.value.body = '';
@@ -147,6 +147,12 @@ export default {
             originalTodo.value = { ...res.data };
             const message = 'Succefully '+ (props.editing ? 'Updated' : 'Create');
             triggerToast(message);
+
+            if(!props.editing){
+                router.push({
+                    name: 'Todos'
+                })
+            }
         } catch (error) {
             triggerToast('Something went wrong', 'danger');
         }
