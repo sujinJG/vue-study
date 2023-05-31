@@ -48,7 +48,7 @@
 <script>
   import { ref, computed, watch } from "vue";
   import TodoList from "@/components/TodoList.vue"; //@ : 프로젝트 src 폴더 경로를 뜻함
-  import axios from "axios";
+  import axios from "@/axios";
   import Toast from "@/components/Toast.vue";
   import {useToast} from "@/composables/toast";
   import { useRouter} from "vue-router";
@@ -82,7 +82,7 @@
         currentPage.value = page;
         try {
           const res = await axios.get(
-            `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}&_sort=id&_order=desc`
+            `todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}&_sort=id&_order=desc`
           );
 
           numberOfTodos.value = res.headers['x-total-count'];
@@ -111,7 +111,7 @@
       const addTodo = async (todo) => {
         err.value = "";
         try {
-          await axios.post("http://localhost:3000/todos", {
+          await axios.post("todos", {
             subject: todo.subject,
             completed: todo.completed,
           });
@@ -126,7 +126,7 @@
       const deleteTodo = async (id) => {
         err.value = "";
         try {
-          await axios.delete("http://localhost:3000/todos/" + id);
+          await axios.delete("todos/" + id);
           getTodos(1);
         } catch (err) {
           triggerToast('Something went wrong', 'danger');
@@ -138,7 +138,7 @@
         err.value = "";
         const id = todos.value[index].id;
         try {
-          await axios.patch("http://localhost:3000/todos/" + id, {
+          await axios.patch("todos/" + id, {
             completed: checked
           });
           todos.value[index].completed = checked;

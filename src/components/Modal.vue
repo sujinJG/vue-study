@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {getCurrentInstance} from 'vue';
 export default {
     setup() {
         const {emit} = getCurrentInstance();

@@ -21,6 +21,7 @@
 
 <script>
 import Modal from '@/components/Modal.vue';
+import {getCurrentInstance} from 'vue';
 
 export default {   
     components:{

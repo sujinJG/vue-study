@@ -48,7 +48,8 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import axios from "@/axios";
 import { useRoute, useRouter} from "vue-router";
 import { ref } from "@vue/reactivity";
 import { computed, onUpdated } from "vue";
@@ -93,7 +94,7 @@ export default {
     const getTodo = async () => {
         loading.value = true;
         try {
-            const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
+            const res = await axios.get(`todos/${todoId}`);
             todo.value = { ...res.data }; 
             originalTodo.value = { ...res.data };
         } catch (error) {
@@ -135,9 +136,9 @@ export default {
                 }
         try {
             if(props.editing){
-                res = await axios.put(`http://localhost:3000/todos/${todoId}`, data);
+                res = await axios.put(`todos/${todoId}`, data);
             }else{
-                res = await axios.post(`http://localhost:3000/todos`, data);
+                res = await axios.post('todos/todos', data);
                 
                 todo.value.subject = '';
                 todo.value.body = '';
