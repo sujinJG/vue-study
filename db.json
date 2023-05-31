@@ -63,34 +63,10 @@
       "id": 24
     },
     {
-      "subject": "545",
+      "subject": "hello",
       "completed": false,
-      "body": "1212",
-      "id": 26
-    },
-    {
-      "subject": "ㅊㄱㄷㅁㅅㄷdf ",
-      "completed": true,
-      "body": "ㅊㄱㄷㅁㅅㄷ",
-      "id": 27
-    },
-    {
-      "subject": "1234",
-      "completed": false,
-      "body": "6666",
-      "id": 28
-    },
-    {
-      "subject": "createTodo",
-      "completed": true,
-      "body": "plz",
-      "id": 29
-    },
-    {
-      "subject": "c",
-      "completed": false,
-      "body": "c",
-      "id": 30
+      "body": "create",
+      "id": 25
     }
   ]
 }

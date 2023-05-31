@@ -13,23 +13,13 @@ export default{
         REMOVE_TOAST(state){
             state.toasts.shift();
         },
-        // UPDATE_TOAST_MESSAGE(state, payload){
-        //     state.toastMessage = payload;
-        // },
-        // UPDATE_TOAST_ALERT_TYPE(state, payload){
-        //     state.toastAlertType = payload;
-        // },
-        // UPDATE_TOAST_STATUS(state, payload){
-        //     state.showToast = payload;
-        // },
     },
     actions: {
-        triggerToast({commit}, message, type='success') {
-            // commit('UPDATE_TOAST_MESSAGE', message); //mutations 실행
-            // commit('UPDATE_TOAST_ALERT_TYPE', type)
-            // commit('UPDATE_TOAST_STATUS', true);
+        triggerToast({commit}, payload) { //데이터는 한 오브젝트로 받아와야 함
             commit('ADD_TOAST',{
-                id: Date.now(), message, type //key와 value가 같아 생략
+                id: Date.now(),
+                message: payload.message, 
+                type: payload.type //key와 value가 같아 생략
             })
 
             setTimeout(() => {
