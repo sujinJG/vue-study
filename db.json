@@ -58,7 +58,7 @@
     },
     {
       "subject": "1234",
-      "completed": false,
+      "completed": true,
       "body": "",
       "id": 24
     }
