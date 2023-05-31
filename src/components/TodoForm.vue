@@ -4,11 +4,16 @@
     <form v-else @submit.prevent="onSave">
         <div class="row">
             <div class="col-6">
-                <div class="form-group">
+                <Input 
+                    lable="Subject"
+                    v-model:subject = "todo.subject"
+                    :error="subjectErr"
+                />
+                <!-- <div class="form-group">
                     <label> Todo Subject</label>
                     <input v-model="todo.subject" type="text" class="form-control" />
                     <div v-if="subjectErr" class="text-red">{{subjectErr}}</div>
-                </div>
+                </div> -->
             </div>
             <div v-if="editing" class="col-6">
                 <div class="form-group">
@@ -46,14 +51,16 @@
 import axios from "axios";
 import { useRoute, useRouter} from "vue-router";
 import { ref } from "@vue/reactivity";
-import { computed } from "vue";
+import { computed, onUpdated } from "vue";
 import _ from "lodash";
 import Toast from "@/components/Toast.vue";
 import {useToast} from "@/composables/toast";
+import Input from '@/components/Input.vue';
 
 export default {
   components: {
     Toast,
+    Input
   },
   props: {
     editing : {
@@ -155,7 +162,7 @@ export default {
       showToast,
       toastMessage,
       toastAlertType,
-      subjectErr
+      subjectErr,
     };
   },
 };

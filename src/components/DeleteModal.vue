@@ -26,7 +26,8 @@ export default {
     components:{
         Modal
     },
-    setup(props, { emit }) {
+    setup() {
+        const {emit} = getCurrentInstance();
         const onClose =()=> {
             emit("close");
         }
