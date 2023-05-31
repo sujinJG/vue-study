@@ -1,28 +1,33 @@
 <template>
-  <div v-for="(todo, index) in todos" :key="todo.id" class="card mt-2">
-      <div 
-        class="card-body p-2 d-flex align-items-center"
-        style="cursor: pointer;"
-        @click="moveToPage(todo.id)">
-        <div class="flex-grow-1">
-          <input 
-            class="input" 
-            type="checkbox" 
-            :checked="todo.completed"
-            @change.stop="toggleTodo(index, $event)"
-            @click.stop=""
-            >
-          <span
-            class="ml-2 mr-2"
-            :class="{todo: todo.completed}">
-            {{todo.subject}}
-          </span>
+  <!-- <div v-for="(todo, index) in todos" :key="todo.id" class="card mt-2"> -->
+    <List
+      :items="todos">
+      <template #default="{item, index}">
+        <div 
+          class="card-body p-2 d-flex align-items-center"
+          style="cursor: pointer;"
+          @click="moveToPage(item.id)">
+          <div class="flex-grow-1">
+            <input 
+              class="input" 
+              type="checkbox" 
+              :checked="item.completed"
+              @change.stop="toggleTodo(index, $event)"
+              @click.stop=""
+              >
+            <span
+              class="ml-2 mr-2"
+              :class="{todo: item.completed}">
+              {{item.subject}}
+            </span>
+          </div>
+          <div>
+            <button @click.stop="openModal(item.id)" class="btn btn-danger">Delete</button>
+          </div>
         </div>
-        <div>
-          <button @click.stop="openModal(todo.id)" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
+      </template>
+    <!-- </div> -->
+  </List>
     <teleport to="#modal">
       <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo">
         <!-- slot 부분 -->
@@ -37,10 +42,12 @@
   import {useRouter} from 'vue-router';
   import Modal from '@/components/DeleteModal.vue'
   import {ref} from 'vue';
+  import List from '@/components/List.vue'
 
   export default {
       components:{
-        Modal
+        Modal,
+        List
       },
     // props: ['todos'] //부모 컴포넌트에서 보낸 변수에 접근할 수 있도록 선언
       props : { //부모 컴포넌트에서 보낸 변수를 오브젝트로 선언하여 타입과 필수여부 설정

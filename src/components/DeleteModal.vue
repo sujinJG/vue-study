@@ -1,8 +1,8 @@
 <template>
   <Modal>
-    <template v-slot:title>Delete Todo!!</template> 
-    <template v-slot:body>Are you sure?</template> 
-    <template v-slot:footer>
+    <template #title>Delete Todo!!</template> 
+    <template #body>Are you sure?</template> 
+    <template #footer>
         <button 
             type="button" 
             class="btn btn-secondary" 
