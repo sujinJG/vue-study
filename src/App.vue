@@ -12,41 +12,18 @@
   </div>
   <Transition name="slide">
     <Toast 
-      v-if="showToast"
-      :message="toastMessage"
-      :type="toastAlertType"/>
+      :message="'hello'"
+      :type="'success'"/>
   </Transition>
 </template>
 
 <script>
 import Toast from '@/components/Toast.vue';
-import {useToast} from "@/composables/toast";
-import {useStore} from 'vuex';
 
 export default {
   components: {
     Toast
   },
-
-  setup (){
-    const store = useStore();
-    console.log(store.state)
-    const {
-          toastMessage,
-          toastAlertType,
-          showToast,
-          triggerToast,
-    } = useToast();
-
-    console.log(showToast.value);
-
-    return {
-      toastMessage,
-      toastAlertType,
-      showToast,
-      triggerToast,
-    }
-  }
 };
 </script>
 
