@@ -39,12 +39,6 @@
         <button :disabled="!todoUpdated" type="submit" class="btn btn-primary">{{editing ? 'Update' : 'Create'}}</button>
         <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">Cancle</button>
     </form>
-    <transition name="fade">
-        <Toast 
-            v-if="showToast"
-            :message="toastMessage"
-            :type="toastAlertType"/>
-    </transition>
 </template>
 
 <script>
@@ -54,13 +48,11 @@ import { useRoute, useRouter} from "vue-router";
 import { ref } from "@vue/reactivity";
 import { computed, onUpdated } from "vue";
 import _ from "lodash";
-import Toast from "@/components/Toast.vue";
 import {useToast} from "@/composables/toast";
 import Input from '@/components/Input.vue';
 
 export default {
   components: {
-    Toast,
     Input
   },
   props: {

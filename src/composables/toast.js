@@ -4,12 +4,12 @@ import {useStore} from 'vuex';
 export const useToast = () => {
     const store = useStore();
 
-    const showToast = computed(()=>store.state.showToast);
+    const showToast = computed(()=>store.state.toast.showToast);
     // const toastMessage = computed(()=>store.state.toastMessage);
-    const toastMessage = computed(()=>store.getters.toastMessageWithSmile);
-    const toastAlertType = computed(()=>store.state.toastAlertType);
+    const toastMessage = computed(()=>store.getters['toast/toastMessageWithSmile']);
+    const toastAlertType = computed(()=>store.state.toast.toastAlertType);
     const triggerToast = (message, type) => {
-        store.dispatch('triggerToast', message, type); //actios 실행
+        store.dispatch('toast/triggerToast', message, type); //actios 실행
     };
 
     return {
